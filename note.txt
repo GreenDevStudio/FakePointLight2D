@@ -1,0 +1,12 @@
+Carregue o shader nos objetos que você quer que o nó FakePointLight2D ilumine.
+Você pode ajustar a taxa de atualização no LightManager.gd, valores menores
+fazem a luz atualizar suavemente mas também pode pesar em alguns dispositivos.
+
+Singleton: Configure o LightManager.gd como singleton e reinicie o projeto (recomendado).
+
+Node: Você não precisa instanciar ou anexar um script a um node qualquer, você 
+pode instanciar diretamente na cena o FakePointLight2D.
+
+
+Também um shader de brinde: "glow_lighter.res"
+Você pode ajustar a intensidade do brilho da textura desejada usando este shader :D
