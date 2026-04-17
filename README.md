@@ -13,7 +13,16 @@ Ainda está em fase experimental mas já pode ser usado em seus projetos sem med
 
 3. Após checar tudo recomendo que reinicie o seu projeto (não é necessário reiniciar a engine).
 
-5. Depois de reiniciar você deve carregar o shader "dynamic_fake_light.res" nos objetos que você quer que o FakePointLight2D ilumine. Dica: você pode carregar em um Node2D e fazer seus filhos herdarem seu material, assim você tera uma iluminação mais global.
+5. Depois de reiniciar você deve carregar o shader "dynamic_fake_light.res" nos objetos que você quer que o FakePointLight2D ilumine. Dica: você pode carregar em um Node2D e fazer seus filhos herdarem seu material, assim você tera uma iluminação mais global. Obs: Você deve declarar uniformes globais para o shader funcionar. recomendo que leia a nota ("note.txt") para entender melhor mas aqui vai uma breve explicação:
+
+Vá em Projects -> Project Settings -> Globals -> Global Shaders
+
+![Imagem de Referência 1](prints/print-projects.png)
+
+Depois declare os parâmetros globais:
+
+![Imagem de Referência 2](prints/print-uniforms.png)
+
 
 4. E por fim instancie o FakePointLight2D em sua cena 2D através do ícone de "+" (você não precisa anexar o script "point_light.gd" em um Node2D).
 
