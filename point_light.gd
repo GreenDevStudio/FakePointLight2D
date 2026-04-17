@@ -17,7 +17,6 @@ func _ready() -> void:
 	LightManager.create_buffer()
 
 func _enter_tree() -> void:
-	LightManager.force_update()
 	LightManager.load_array_masks()
 	LightManager.create_buffer()
 	LightManager.register_light(self)

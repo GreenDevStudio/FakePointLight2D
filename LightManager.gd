@@ -22,13 +22,15 @@ func _ready() -> void:
 func load_array_masks() -> void:
 	if masks_loaded:
 		return
-	var mask_0: Image = load("res://Textures/mask/lights/glow_pixelated.png").get_image()
-	var mask_1: Image = load("res://Textures/mask/lights/conical_light.png").get_image()
+	var mask_0: Image = load("res://mask/lights/glow_pixelated.png").get_image()
+	var mask_1: Image = load("res://mask/lights/conical_light.png").get_image()
+	var mask_2: Image = load("res://mask/lights/glow_pixelated_divided.png").get_image()
 	
 	samplerArray = Texture2DArray.new()
 	var images: Array[Image] = [
 		mask_0,
-		mask_1
+		mask_1,
+		mask_2
 	]
 	
 	samplerArray.create_from_images(images)
@@ -75,6 +77,7 @@ func register_light(light: FakePointLight2D) -> void:
 	})
 	lights_count = registed_lights.size()
 	RenderingServer.global_shader_parameter_set("light_count", lights_count)
+	force_update()
 
 func unregister_light(light: FakePointLight2D) -> void:
 	if light in registed_lights:
@@ -123,7 +126,7 @@ func update() -> void:
 				#mask_id
 				data_images[2].set_pixel(0, x, Color(light.mask_light_id, float(light.visible), 0))
 				#transforms
-				data_images[3].set_pixel(0, x, Color(light.global_rotation, light.scale.x, light.scale.y))
+				data_images[3].set_pixel(0, x, Color(sin(light.global_rotation), light.scale.x, light.scale.y, cos(light.global_rotation)))
 				
 				buffers_need_update = true
 				# Update buffers texture
@@ -142,7 +145,7 @@ func force_update() -> void:
 	lights_count = registed_lights.size()
 	RenderingServer.global_shader_parameter_set("light_count", lights_count)
 	var buffers_need_update: bool = false
-	for x in range(MAX_LIGHTS):
+	for x in range(lights_count):
 		if x < lights_count:
 			var light: FakePointLight2D = registed_lights[x]
 			# =========== DATA REC ===========
@@ -154,7 +157,7 @@ func force_update() -> void:
 			#mask_id
 			data_images[2].set_pixel(0, x, Color(light.mask_light_id, float(light.visible), 0))
 			#transforms
-			data_images[3].set_pixel(0, x, Color(light.global_rotation, light.scale.x, light.scale.y))
+			data_images[3].set_pixel(0, x, Color(sin(light.global_rotation), light.scale.x, light.scale.y, cos(light.global_rotation)))
 			
 			buffers_need_update = true
 			# Update buffers texture

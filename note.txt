@@ -5,8 +5,60 @@ fazem a luz atualizar suavemente mas também pode pesar em alguns dispositivos.
 Singleton: Configure o LightManager.gd como singleton e reinicie o projeto (recomendado).
 
 Node: Você não precisa instanciar ou anexar um script a um node qualquer, você 
-pode instanciar diretamente na cena o FakePointLight2D.
+pode instanciar diretamente na cena o FakePointLight2D. Mas se você quiser
+personalizar ou até melhorar ainda mais o desempenho você pode sim anexar
+point_light.gd em um Node2D  que o sistema irá funcionar, inclusive você pode
+escrever "extends FakePointLight2D" mas será necessário que o script personalizado
+esteja com a anotação "tool" (no topo do script escreva "@tool" antes de "extends".
 
+⚠️ ANTENÇÃO:
+Você precisa configurar o seu projeto para usar uniformes globais para o shader funcionar
+pois o LightManager precisa de alguns parâmetros globais para enviar dados a sua placa de vídeo.
+
+Vá em Projects -> Projects Settings -> Globals -> Global Shaders e declare as seguintes uniformes:
+
+"light_buffer_<número>" (0 até 3) do tipo Sampler2D (textura).
+"light_masks" do tipo Sampler2DArray (Array de Texturas).
+"light_count" do tipo inteiro (int).
+
+Recomendo deixar o filtro das texturas como Nearest para melhor leitura
+e estilo do seu jogo. Para isso basta apenas dizer: "global uniform light_buffer_0: filter_nearest;".
 
 Também um shader de brinde: "glow_lighter.res"
 Você pode ajustar a intensidade do brilho da textura desejada usando este shader :D
+
+-----------------------------------------------------------------------------------------------------------------------------------
+
+English:
+
+Load the shader onto the objects you want the FakePointLight2D node to illuminate.
+You can adjust the update rate in LightManager.gd; lower values make the light update more smoothly, but 
+may also impact performance on some devices.
+
+Singleton: Configure LightManager.gd as a singleton and restart the project (recommended).
+
+Node: You don’t need to instance or attach a script to just any node—you can directly 
+instance FakePointLight2D in your scene. However, if you want to customize it or 
+further improve performance, you can attach point_light.gd to a Node2D, and the system 
+will still work. You can even write extends FakePointLight2D, but in that case your custom script 
+must include the "tool" annotation (at the top of the script, write @tool before extends).
+
+⚠️ WARNING:
+You need to configure your project to use global uniforms for the shader to work, since the LightManager 
+requires some global parameters to send data to your GPU.
+
+Go to Project → Project Settings → Globals → Global Shaders and declare the following uniforms:
+
+"light_buffer_<number>" (0 to 3) of type Sampler2D (texture)
+
+"light_masks" of type Sampler2DArray (array of textures)
+
+"light_count" of type int
+
+
+I recommend setting the texture filter to Nearest for better readability and to match your game’s style. 
+To do this, simply write:
+global uniform light_buffer_0: filter_nearest;
+
+Also, here’s a bonus shader: "glow_lighter.res"
+You can adjust the glow intensity of the desired texture using this shader :D
