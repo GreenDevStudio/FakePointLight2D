@@ -1,3 +1,9 @@
+# News v0.0.3
+- Agora as luzes serão ocultadas caso o pai esteja invisível.
+
+English:
+- Now the lights will be hidden if the parent is invisible.
+
 # FakePointLight2D-For-Godot-4
 Um recurso que fiz para os meus projetos mas agora adaptado para qualquer um usar! FakePointLight2D simula uma luz perfeitamente leve e convincente, perfeito para hardwares mais fracos como dispositivos móveis.
 
