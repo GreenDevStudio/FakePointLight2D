@@ -73,7 +73,7 @@ func register_light(light: FakePointLight2D) -> void:
 		"mask_scale": light.scale,
 		"energy": light.energy,
 		"light_color": light.light_color,
-		"visible": light.visible
+		"visible": light.global_visible
 	})
 	lights_count = registed_lights.size()
 	RenderingServer.global_shader_parameter_set("light_count", lights_count)
@@ -106,7 +106,7 @@ func update() -> void:
 			var last_data: Dictionary = last_light_data[x]
 			changed = (light.mask_light_id != last_data.light_mask_id or light.energy != last_data.energy \
 			or light.light_color != last_data.light_color or light.global_position != last_data.light_pos \
-			or light.scale != last_data.mask_scale or light.visible != last_data.visible or last_data.light_rotation != light.global_rotation)
+			or light.scale != last_data.mask_scale or light.global_visible != last_data.visible or last_data.light_rotation != light.global_rotation)
 			
 			if changed:
 				last_data.light_mask_id = light.mask_light_id
@@ -115,7 +115,7 @@ func update() -> void:
 				last_data.energy = light.energy
 				last_data.light_color = light.light_color
 				last_data.light_pos = light.global_position
-				last_data.visible = light.visible
+				last_data.visible = light.global_visible
 				
 				# =========== DATA REC ===========
 				
@@ -124,7 +124,7 @@ func update() -> void:
 				#light_pos
 				data_images[1].set_pixel(0, x, Color(light.global_position.x, light.global_position.y, 0))
 				#mask_id
-				data_images[2].set_pixel(0, x, Color(light.mask_light_id, float(light.visible), 0))
+				data_images[2].set_pixel(0, x, Color(light.mask_light_id, float(light.global_visible), 0))
 				#transforms
 				data_images[3].set_pixel(0, x, Color(sin(light.global_rotation), light.scale.x, light.scale.y, cos(light.global_rotation)))
 				
@@ -155,7 +155,7 @@ func force_update() -> void:
 			#light_pos & mask_sacle
 			data_images[1].set_pixel(0, x, Color(light.global_position.x, light.global_position.y, 0))
 			#mask_id
-			data_images[2].set_pixel(0, x, Color(light.mask_light_id, float(light.visible), 0))
+			data_images[2].set_pixel(0, x, Color(light.mask_light_id, float(light.global_visible), 0))
 			#transforms
 			data_images[3].set_pixel(0, x, Color(sin(light.global_rotation), light.scale.x, light.scale.y, cos(light.global_rotation)))
 			
